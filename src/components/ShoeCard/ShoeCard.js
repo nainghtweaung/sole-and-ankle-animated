@@ -82,13 +82,16 @@ const Image = styled.img`
   width: 100%;
   transform-origin: 50% 80%;
   will-change: transform;
-  transition: transform 600ms;
+  transition: transform 600ms, filter 500ms;
+  filter: brightness(90%);
 
   @media (hover: hover) and (prefers-reduced-motion: no-preference) {
     ${Link}:hover &,
     ${Link}:focus & {
+      filter: brightness(100%);
+
       transform: scale(1.1);
-      transition: transform 200ms ease-out;
+      transition: transform 200ms ease-out, filter 200ms;
     }
   }
 `;
@@ -138,7 +141,7 @@ const SaleFlag = styled(Flag)`
 
   @media (hover: hover) and (prefers-reduced-motion: no-preference) {
     ${Link}:hover & {
-      filter: drop-shadow(0 2px 0 var(--color-secondary));
+      filter: drop-shadow(0 2px 4px var(--color-primary));
       transition: filter ease-out 200ms;
     }
   }
@@ -149,7 +152,7 @@ const NewFlag = styled(Flag)`
 
   @media (hover: hover) and (prefers-reduced-motion: no-preference) {
     ${Link}:hover & {
-      filter: drop-shadow(0 2px 0 var(--color-primary));
+      filter: drop-shadow(0 2px 4px var(--color-secondary));
       transition: filter ease-out 200ms;
     }
   }
