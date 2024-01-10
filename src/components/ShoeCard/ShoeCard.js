@@ -83,7 +83,10 @@ const Image = styled.img`
   transform-origin: 50% 80%;
   will-change: transform;
   transition: transform 600ms, filter 500ms;
-  filter: brightness(90%);
+
+  @media (hover: hover) {
+    filter: brightness(90%);
+  }
 
   @media (hover: hover) and (prefers-reduced-motion: no-preference) {
     ${Link}:hover &,

@@ -1,40 +1,51 @@
 /* eslint-disable no-unused-vars */
-import React from 'react';
-import styled from 'styled-components/macro';
-import { DialogOverlay, DialogContent } from '@reach/dialog';
+import React from "react";
+import styled, {keyframes} from "styled-components/macro";
+import {DialogOverlay, DialogContent} from "@reach/dialog";
 
-import { QUERIES, WEIGHTS } from '../../constants';
+import {WEIGHTS} from "../../constants";
 
-import UnstyledButton from '../UnstyledButton';
-import Icon from '../Icon';
-import VisuallyHidden from '../VisuallyHidden';
+import UnstyledButton from "../UnstyledButton";
+import Icon from "../Icon";
+import VisuallyHidden from "../VisuallyHidden";
 
-const MobileMenu = ({ isOpen, onDismiss }) => {
+const MobileMenu = ({isOpen, onDismiss}) => {
   return (
     <Overlay isOpen={isOpen} onDismiss={onDismiss}>
-      <Content aria-label="Menu">
-        <CloseButton onClick={onDismiss}>
-          <Icon id="close" />
-          <VisuallyHidden>Dismiss menu</VisuallyHidden>
-        </CloseButton>
-        <Filler />
-        <Nav>
-          <NavLink href="/sale">Sale</NavLink>
-          <NavLink href="/new">New&nbsp;Releases</NavLink>
-          <NavLink href="/men">Men</NavLink>
-          <NavLink href="/women">Women</NavLink>
-          <NavLink href="/kids">Kids</NavLink>
-          <NavLink href="/collections">Collections</NavLink>
-        </Nav>
-        <Footer>
-          <SubLink href="/terms">Terms and Conditions</SubLink>
-          <SubLink href="/privacy">Privacy Policy</SubLink>
-          <SubLink href="/contact">Contact Us</SubLink>
-        </Footer>
-      </Content>
+      <ContentWrapper>
+        <Content aria-label="Menu">
+          <CloseButton onClick={onDismiss}>
+            <Icon id="close" />
+            <VisuallyHidden>Dismiss menu</VisuallyHidden>
+          </CloseButton>
+          <Filler />
+          <Nav>
+            <NavLink href="/sale">Sale</NavLink>
+            <NavLink href="/new">New&nbsp;Releases</NavLink>
+            <NavLink href="/men">Men</NavLink>
+            <NavLink href="/women">Women</NavLink>
+            <NavLink href="/kids">Kids</NavLink>
+            <NavLink href="/collections">Collections</NavLink>
+          </Nav>
+          <Footer>
+            <SubLink href="/terms">Terms and Conditions</SubLink>
+            <SubLink href="/privacy">Privacy Policy</SubLink>
+            <SubLink href="/contact">Contact Us</SubLink>
+          </Footer>
+        </Content>
+      </ContentWrapper>
     </Overlay>
   );
 };
+
+const OverlayFadeIn = keyframes`
+  from {
+    background-color: transparent;
+  }
+  to {
+    background: var(--color-backdrop);
+  }
+`;
 
 const Overlay = styled(DialogOverlay)`
   position: fixed;
@@ -42,18 +53,51 @@ const Overlay = styled(DialogOverlay)`
   left: 0;
   right: 0;
   bottom: 0;
-  background: var(--color-backdrop);
   display: flex;
   justify-content: flex-end;
+  perspective: 500px;
+
+  animation: ${OverlayFadeIn} 500ms ease-in-out;
+  animation-fill-mode: forwards;
+`;
+
+const ContentWrapperSlideIn = keyframes`
+  0% {
+    transform: translateX(100%);
+  }
+  99% {
+    transform: translateX(1%);
+  }
+  100% {
+    transform: translateX(0%);
+  }
+  `;
+
+const ContentWrapper = styled.div`
+  background: white;
+  animation: ${ContentWrapperSlideIn} 300ms cubic-bezier(0, 0.6, 0.32, 1.06);
+  animation-delay: 200ms;
+  animation-fill-mode: both;
+`;
+
+const ContentFadeIn = keyframes`
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
 `;
 
 const Content = styled(DialogContent)`
-  background: white;
   width: 300px;
   height: 100%;
   padding: 24px 32px;
   display: flex;
   flex-direction: column;
+  animation: ${ContentFadeIn} 600ms;
+  animation-delay: 400ms;
+  animation-fill-mode: both;
 `;
 
 const CloseButton = styled(UnstyledButton)`
